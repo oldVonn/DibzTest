@@ -15,7 +15,13 @@ class CreateTblGaragePhotos extends Migration
     {
         Schema::create('tbl_garage_photos', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->double('width');
+            $table->double('height');
+            $table->string('extension',['jpg','png']);
+            $table->foreign('garage_id')->references('id')->on('tbl_garages');
             $table->timestamps();
+            $table->dropSoftDeletes();
         });
     }
 

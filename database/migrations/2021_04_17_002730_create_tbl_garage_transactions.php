@@ -15,7 +15,14 @@ class CreateTblGarageTransactions extends Migration
     {
         Schema::create('tbl_garage_transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreign('garage_id')->references('id')->on('tbl_garages');
+            $table->timestamps('opening_time');
+            $table->timestamps('closing_time');
+            $table->double('total');
+            $table->foreign('car_in_by_user_id')->references('id')->on('tbl_users');
+            $table->foreign('car_out_by_user_id')->references('id')->on('tbl_users');
             $table->timestamps();
+            $table->dropSoftDeletes();
         });
     }
 

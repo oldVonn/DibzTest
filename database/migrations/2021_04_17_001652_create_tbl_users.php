@@ -25,7 +25,6 @@ class CreateTblUsers extends Migration
                     ->default(null);
             $table->rememberToken();
             $table->timestamps();
-            $table->dropSoftDeletes();
         });
     }
 
