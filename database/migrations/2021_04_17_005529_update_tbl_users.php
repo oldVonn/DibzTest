@@ -14,9 +14,9 @@ class UpdateTblUsers extends Migration
     public function up()
     {
         Schema::table('tbl_users', function (Blueprint $table) {
-            $table->string('access_level',['admin','attendants']);
+            $table->enum('access_level',['admin','attendants']);
             $table->string('profile_picture');
-            $table->foreign('garage_id')->references('id')->on('tbl_garages')->nullable();
+            $table->foreignId('garage_id')->constrained('tbl_garages');
             $table->softDeletes();
         });
     }

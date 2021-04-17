@@ -18,9 +18,9 @@ class CreateTblGarages extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('address');
-            $table->string('status',['available','reserved','pending','cancelled','disabled','taken']);
+            $table->enum('status',['available','reserved','pending','cancelled','disabled','taken']);
             $table->timestamps();
-            $table->dropSoftDeletes();
+            $table->softDeletes();
         });
     }
 

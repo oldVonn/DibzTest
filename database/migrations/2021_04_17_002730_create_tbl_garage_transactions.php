@@ -13,16 +13,16 @@ class CreateTblGarageTransactions extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_garage_transactions', function (Blueprint $table) {
+        Schema::create('tbl_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreign('garage_id')->references('id')->on('tbl_garages');
-            $table->timestamps('opening_time');
-            $table->timestamps('closing_time');
+            $table->foreignId('garage_id')->constrained('tbl_garages');
+            $table->dateTime('opening_time');
+            $table->dateTime('closing_time');
             $table->double('total');
-            $table->foreign('car_in_by_user_id')->references('id')->on('tbl_users');
-            $table->foreign('car_out_by_user_id')->references('id')->on('tbl_users');
+            $table->foreignId('car_in_by_user_id')->constrained('tbl_users');
+            $table->foreignId('car_out_by_user_id')->nullable()->constrained('tbl_garages');
             $table->timestamps();
-            $table->dropSoftDeletes();
+            $table->softDeletes();
         });
     }
 

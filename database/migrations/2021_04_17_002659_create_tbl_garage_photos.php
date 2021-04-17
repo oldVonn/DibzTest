@@ -18,10 +18,10 @@ class CreateTblGaragePhotos extends Migration
             $table->string('name');
             $table->double('width');
             $table->double('height');
-            $table->string('extension',['jpg','png']);
-            $table->foreign('garage_id')->references('id')->on('tbl_garages');
+            $table->enum('extension',['jpg','png']);
+            $table->foreignId('garage_id')->constrained('tbl_garages');
             $table->timestamps();
-            $table->dropSoftDeletes();
+            $table->softDeletes();
         });
     }
 

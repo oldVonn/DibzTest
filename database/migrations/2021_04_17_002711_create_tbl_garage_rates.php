@@ -15,16 +15,16 @@ class CreateTblGarageRates extends Migration
     {
         Schema::create('tbl_garage_rates', function (Blueprint $table) {
             $table->id();
-            $table->string('day',['monday','tuesday','wednesday','thursday','friday','saturday','sunday']);
-            $table->timestamps('opening_time');
-            $table->timestamps('closing_time');
-            $table->string('type',['flat','hourly']);
+            $table->enum('day',['monday','tuesday','wednesday','thursday','friday','saturday','sunday']);
+            $table->time('opening_time');
+            $table->time('closing_time');
+            $table->enum('type',['flat','hourly']);
             $table->double('rate');
-            $table->string('status',['open','close']);
+            $table->enum('status',['open','close']);
             $table->double('succeeding_rate');
-            $table->foreign('garage_id')->references('id')->on('tbl_garages');
+            $table->foreignId('garage_id')->constrained('tbl_garages');
             $table->timestamps();
-            $table->dropSoftDeletes();
+            $table->softDeletes();
         });
     }
 
