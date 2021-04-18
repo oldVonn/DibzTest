@@ -19,6 +19,20 @@ Route::get('/', function () {
 
 
 Route::get('/garage', 'App\Http\Controllers\GarageController@index');
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::prefix('/login')
+//     ->as('tbluser.')
+//     ->group(function() {
+//         Route::get('/', function () {
+//                 return view('welcome');
+//             });
+//         Route::namespace('Auth\Login')
+//             ->group(function() {
+//                 Route::get('login', 'TblUserController@showLoginForm')->name('login');
+//                 Route::post('login', 'TblUserController@login')->name('login');
+//                 Route::post('logout', 'TblUserController@logout')->name('logout');
+//         });
+//  });
+Auth::routes();

@@ -46,6 +46,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'tbl_users' => [
+            'driver' => 'token',
+            'provider' => 'tbl_users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -68,12 +74,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\TblUser::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
+        // 'tbl_users' => [
+        //     'driver' => 'eloquent',
+        //     'table' => App\Models\TblUser::class,
         // ],
     ],
 
