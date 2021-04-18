@@ -59,7 +59,8 @@ class TransactionController extends Controller
 
         $trans = TblTransaction::find($request->id);
 
-        if($trans->count() == 0) return response()->json(['Unable to process transaction'], 400);
+        if($trans == null) return response()->json(['Unable to process transaction'], 400);
+        if($trans->closing_time && $trans->car_out_by_user_id) return response()->json(['Car is already out'], 400);
 
         $trans->closing_time = now();
         $trans->car_out_by_user_id = $request->car_out_by_user_id;
@@ -75,8 +76,8 @@ class TransactionController extends Controller
         if($garageRate->type == 'flat') {
             $trans->total = $garageRate->rate;
         } else {
-            $datetime1 = strtotime($trans->opening_time);
-            $datetime2 = strtotime($trans->closing_time);
+            $datetime1 = strtotime($trans->closing_time);
+            $datetime2 = strtotime($trans->opening_time);
             $interval = ($datetime1-$datetime2)/3600;
             $spent = $interval;//->format('%d');
 
