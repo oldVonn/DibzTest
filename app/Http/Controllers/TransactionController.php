@@ -4,21 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\TblTransaction;
 use App\Models\TblGarage;
 use App\Models\TblGarageRate;
 
+
 class TransactionController extends Controller
 {
     //
     public function index() {
+        Log::info("Show all transaction");
         $trans = TblTransaction::all();
         return response()->json([$trans], 200);
     }
 
     public function car_in(Request $request) {
         
+        Log::info("car in: ". ($request));
         $today = Str::lower(now()->format('l'));
         $time = now()->format('H:i:s');
         $now = now();
@@ -57,6 +61,7 @@ class TransactionController extends Controller
 
     public function car_out(Request $request) {
 
+        Log::info("car out: ". ($request));
         $trans = TblTransaction::find($request->id);
 
         if($trans == null) return response()->json(['Unable to process transaction'], 400);
