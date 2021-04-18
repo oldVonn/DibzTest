@@ -15,14 +15,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => '/users'], function (){
-    Route::post('/', 'UserController@index');
+    Route::get('/', 'App\Http\Controllers\UserController@index');
+    Route::post('/registerAdmin', 'App\Http\Controllers\UserController@registerAdmin');
 });
-
-
 
 Route::group(['prefix' => '/garage'], function (){
     Route::get('/', 'App\Http\Controllers\GarageController@index');
     Route::get('/show/{id}', 'App\Http\Controllers\GarageController@show');
     Route::post('/store', 'App\Http\Controllers\GarageController@store');
     Route::put('/update/{id}', 'App\Http\Controllers\GarageController@update');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\GarageController@delete');
+});
+
+Route::group(['prefix' => '/garage_rate'], function (){
+    Route::get('/', 'App\Http\Controllers\GarageRateController@index');
+    Route::get('/show/{id}', 'App\Http\Controllers\GarageRateController@show');
+    Route::post('/store', 'App\Http\Controllers\GarageRateController@store');
+    Route::put('/update/{id}', 'App\Http\Controllers\GarageRateController@update');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\GarageRateController@delete');
+});
+
+Route::group(['prefix' => '/garage_photo'], function (){
+    Route::get('/', 'App\Http\Controllers\GaragePhotoController@index');
+    Route::get('/show/{id}', 'App\Http\Controllers\GaragePhotoController@show');
+    Route::post('/store', 'App\Http\Controllers\GaragePhotoController@store');
+    Route::POST('/update/{id}', 'App\Http\Controllers\GaragePhotoController@update');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\GaragePhotoController@delete');
 });
