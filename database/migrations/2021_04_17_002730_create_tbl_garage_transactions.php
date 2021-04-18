@@ -17,10 +17,10 @@ class CreateTblGarageTransactions extends Migration
             $table->id();
             $table->foreignId('garage_id')->constrained('tbl_garages');
             $table->dateTime('opening_time');
-            $table->dateTime('closing_time');
+            $table->dateTime('closing_time')->nullable();
             $table->double('total');
             $table->foreignId('car_in_by_user_id')->constrained('tbl_users');
-            $table->foreignId('car_out_by_user_id')->nullable()->constrained('tbl_garages');
+            $table->foreignId('car_out_by_user_id')->nullable()->constrained('tbl_users');
             $table->timestamps();
             $table->softDeletes();
         });

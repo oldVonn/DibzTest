@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => '/users'], function (){
     Route::get('/', 'App\Http\Controllers\UserController@index');
     Route::post('/registerAdmin', 'App\Http\Controllers\UserController@registerAdmin');
+    Route::post('/login', 'App\Http\Controllers\UserController@login');
+    Route::post('/store', 'App\Http\Controllers\UserController@store');
 });
 
 Route::group(['prefix' => '/garage'], function (){
@@ -41,4 +43,10 @@ Route::group(['prefix' => '/garage_photo'], function (){
     Route::post('/store', 'App\Http\Controllers\GaragePhotoController@store');
     Route::POST('/update/{id}', 'App\Http\Controllers\GaragePhotoController@update');
     Route::delete('/delete/{id}', 'App\Http\Controllers\GaragePhotoController@delete');
+});
+
+Route::group(['prefix' => '/transaction'], function (){
+    Route::get('/', 'App\Http\Controllers\TransactionController@index');
+    Route::post('/in', 'App\Http\Controllers\TransactionController@car_in');
+    Route::post('/out', 'App\Http\Controllers\TransactionController@car_out');
 });

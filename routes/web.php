@@ -19,3 +19,6 @@ Route::get('/', function () {
 
 
 Route::get('/garage', 'App\Http\Controllers\GarageController@index');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
