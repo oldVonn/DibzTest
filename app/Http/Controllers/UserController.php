@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TblGarage;
 use App\Models\TblUser;
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GarageController;
 
 use Illuminate\Http\Request;
 
@@ -15,28 +15,6 @@ class UserController extends Controller
 
     public function index(){
 
-    }
-
-    public function login(Request $request)
-    {
-        $user = Auth::TblUser(); 
-        // if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-        //     $user = Auth::user(); 
-        //     $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-        //     $success['name'] =  $user->name;
-   
-        //     return response()->json([
-        //         'success' => true,
-        //         'data'    => $success,
-        //         'message' => "",
-        //     ], 200);
-        // } else { 
-        //     return response()->json([
-        //         'success' => true,
-        //         'data'    => $success,
-        //         'message' => "",
-        //     ], 404);
-        // } 
     }
     
     public function registerAdmin(Request $request) {
@@ -73,6 +51,8 @@ class UserController extends Controller
         }
         $user->save();
         
+        auth()->login($user);
+
         if($user) return response()->json(['User saved'], 200);
 
         return response()->json(['Failed to save user'], 400);
