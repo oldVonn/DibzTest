@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TblGarage;
+use App\Models\TblGaragePhoto;
 use App\Models\TblUser;
 
 use App\Http\Controllers\GarageController;
@@ -14,7 +15,7 @@ class UserController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth:tbl_user');
+        // $this->middleware('auth:tbl_user');
     }
     public function index()
     {
@@ -42,7 +43,6 @@ class UserController extends Controller
         // } 
     }
     public function registerAdmin(Request $request) {
-           
         $garage = new TblGarage();
         $garage->name = $request->garage_name;
         $garage->description = $request->description;
@@ -51,6 +51,40 @@ class UserController extends Controller
 
         $garage->save();
 
+        if(!$request->hasFile('imgs')) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+        $now = now();
+        $time = time();
+        if($request->file()) {
+            $allowedfileExtension=['jpg','png'];
+            $files = $request->file('imgs'); 
+            foreach ($files as $file) {
+                $extension = $file->extension();
+                $check = in_array($extension,$allowedfileExtension);
+                if($check) {
+                    $name = $time."-".$file->getClientOriginalName();
+                    $filePath = $file->storeAs('uploads/'.$garage->id, $name, 'local');
+                    $data = getimagesize($file);
+                    $width = $data[0];
+                    $height = $data[1];
+
+                    // saving to database_
+                    $garagePhoto = new TblGaragePhoto();
+                    $garagePhoto->name = $name;
+                    $garagePhoto->width = $width;
+                    $garagePhoto->height = $height;
+                    $garagePhoto->extension = $extension;
+                    $garagePhoto->garage_id = $garage->id;
+
+                    $garagePhoto->save();
+                } else {
+                    return response()->json(['invalid_file_format'], 422);
+                }
+            }
+        } else {
+            return response()->json(['invalid_file_format'], 422);
+        }
         $user = new TblUser();
         $user->name = $request->user_name;
         $user->email = $request->email;
@@ -59,13 +93,13 @@ class UserController extends Controller
         $user->profile_picture = "";
         $user->garage_id = $garage->id;
 
-        if($request->hasFile('img')) {
+        if($request->hasFile('profile_pic')) {
             $now = now();
             $time = time();
             if($request->file()) {
                 $allowedfileExtension=['jpg','png'];
-                $file = $request->file('img'); 
-                $extension = $file->extension();
+                $file = $request->file('profile_pic'); 
+                $extension = $request->file('profile_pic')->extension();
                 $check = in_array($extension,$allowedfileExtension);
                 if($check) {
                     $user->profile_picture = $time."-".$file->getClientOriginalName();

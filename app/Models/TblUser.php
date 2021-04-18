@@ -51,8 +51,8 @@ class TblUser extends Model
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public function getAuthPassword()
-    {
-     return $this->password;
-    }
+    // public function getAuthPassword()
+    // {
+    //  return $this->password;
+    // }
 }
