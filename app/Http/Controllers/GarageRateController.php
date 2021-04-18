@@ -26,6 +26,9 @@ class GarageRateController extends Controller
         $garage->succeeding_rate = $request->succeeding_rate;
         $garage->garage_id = $request->garage_id;
 
+        $garageExist = TblGarageRate::where([["garage_id",$garage->garage_id],["day",$garage->day]])->count();
+        if($garageExist  > 0) return response()->json(['Garage rate exist, please proceed to update garage rate'], 200);
+
         $garage->save();
         
         if($garage) return response()->json(['Garage rate saved'], 200);
